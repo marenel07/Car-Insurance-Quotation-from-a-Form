@@ -30,16 +30,21 @@ form.addEventListener('submit', function(e) {
         html.displayError('All the fields are mandatory');
 
     } else {
+        // Clear the previous quotes
+
+        const prevResult = document.querySelector('#result div');
+        if(prevResult != null) {
+                prevResult.remove();
+        }
         // Make the quotation
         const insurance = new Insurance(make, year, level);
         const price = insurance.calculateQuotation(insurance);
 
         // Print the result from HTMLUI();
         html.showResults(price, insurance);
-    }
+            
+            }
    
-
-
        });
 }
 
@@ -187,7 +192,7 @@ HTMLUI.prototype.showResults = function(price, insurance) {
             break;
     }
 
-    console.log(make);
+    
 
     // Insert the result
     div.innerHTML = `
@@ -198,6 +203,16 @@ HTMLUI.prototype.showResults = function(price, insurance) {
         <p class="total">Total: $ ${price}</p>
     `;
 
-    // Insert this into the HTML
-    result.appendChild(div);
+    const spinner = document.querySelector('#loading img');
+    spinner.style.display = 'block';
+
+    setTimeout(function() {
+        spinner.style.display = 'none';
+
+        result.appendChild(div);
+    }, 3000);
+    
+
+   
+    
 }
