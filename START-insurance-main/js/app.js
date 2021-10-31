@@ -30,7 +30,9 @@ form.addEventListener('submit', function(e) {
         html.displayError('All the fields are mandatory');
 
     } else {
-        console.log('Alright!!');
+        // Make the quotation
+        const insurance = new Insurance(make, year, level);
+        const price = insurance.calculateQuotation(insurance)
     }
    
 
@@ -41,6 +43,61 @@ form.addEventListener('submit', function(e) {
 
 
 //Object
+
+// Everything related to the quotation and calculations is insurance
+function Insurance(make, year, level) {
+    this.make = make;
+    this.year = year;
+    this.level = level;
+}
+// Calculate the price for the current quotation
+Insurance.prototype.calculateQuotation = function(insurance) {
+    let price;
+    const base = 2000;
+    
+
+    // get the make
+    const make = insurance.make;
+
+    /*
+        1 = American 15%
+        2 = Asian 05%
+        3 = European 35%
+
+
+    */
+    switch(make) {
+        case '1':
+            price = base * 1.15;
+            break;
+        case '2':
+            price = base * 1.05;
+            break;
+        case '3':
+            price = base * 1.35;
+            break;
+            
+            
+    }
+    
+    // Get the year
+    const year = insurance.year;
+
+    const difference = this.getYearDifference(year);
+
+    // Each year the cost of the insurance is going to be 3% cheaper
+    price = price - ((difference * 3) * price) / 100;
+    console.log(price);
+
+    // Get the years difference
+
+}
+// Returns the difference between years 
+Insurance.prototype.getYearDifference = function(year) {
+    return new Date().getFullYear() - year;
+}
+
+// Everything related to the HTML
 
 function HTMLUI() {}
 
