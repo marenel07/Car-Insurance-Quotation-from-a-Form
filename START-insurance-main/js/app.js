@@ -162,3 +162,20 @@ HTMLUI.prototype.displayError = function(message) {
     }, 3000);
 
 }
+
+// Print the result into the HTML
+HTMLUI.prototype.showResults = function(price) {
+    //Print the result
+    const result = document.getElementById('result');
+
+    // Create a div with the result
+    const div = document.createElement('div');
+
+    // Insert the result
+    div.innerHTML = `
+        <p class="total">Total: $ ${price}</p>
+    `;
+
+    // Insert this into the HTML
+    result.appendChild(div);
+}
