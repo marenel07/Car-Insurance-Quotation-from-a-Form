@@ -32,7 +32,10 @@ form.addEventListener('submit', function(e) {
     } else {
         // Make the quotation
         const insurance = new Insurance(make, year, level);
-        const price = insurance.calculateQuotation(insurance)
+        const price = insurance.calculateQuotation(insurance);
+
+        // Print the result from HTMLUI();
+        html.showResults(price);
     }
    
 
@@ -83,13 +86,20 @@ Insurance.prototype.calculateQuotation = function(insurance) {
     // Get the year
     const year = insurance.year;
 
+     // Get the years difference
+
     const difference = this.getYearDifference(year);
 
     // Each year the cost of the insurance is going to be 3% cheaper
     price = price - ((difference * 3) * price) / 100;
-    console.log(price);
+    
+    // Check the level of protection
+    const level = insurance.level;
 
-    // Get the years difference
+    price = this.calculateLevel(price, level);
+
+    return price;
+    
 
 }
 // Returns the difference between years 
@@ -97,6 +107,20 @@ Insurance.prototype.getYearDifference = function(year) {
     return new Date().getFullYear() - year;
 }
 
+// Add the value based on the level of protection
+Insurance.prototype.calculateLevel = function(price, level) {
+    /*
+        Basic Insurance is going to increase the value by 30%
+        Complete Insurance is going to increase the value by 50%
+    */
+   if(level === 'basic') {
+       price = price * 1.30;
+   } else {
+       price = price * 1.50;
+   }
+
+   return price;
+}
 // Everything related to the HTML
 
 function HTMLUI() {}
